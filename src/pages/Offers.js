@@ -1,8 +1,12 @@
 function Offers() {
   return (
-    <div>
-    <h1>Offers</h1>
-  </div>
+    <div className="explore">
+      <header>
+        <p className="pageHeader">
+          Offers
+        </p>
+      </header>
+    </div>
   )
 }
 export default Offers

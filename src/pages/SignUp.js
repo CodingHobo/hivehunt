@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import OAuth from "../components/OAuth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase.config"
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
@@ -47,7 +49,7 @@ function SignUp() {
 
       navigate("/");
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong with registration. Please try again.");
     }
   }
 
@@ -112,7 +114,7 @@ function SignUp() {
               </button>
             </div>
           </form>
-          {/* Google OAuth */}
+          <OAuth />
           <Link to="/sign-in" className="registerLink">
             Aready registered? Sign Up
           </Link>
