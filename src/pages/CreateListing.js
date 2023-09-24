@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import Spinner from '../components/Spinner';
-
+import resizeImage from '../utils/resizeImage';
 
 function CreateListing() {
   const [ geolocationEnabled, setGeolocationEnabled ] = useState(true);
@@ -110,19 +110,9 @@ function CreateListing() {
     } else {
       geolocation.lat = latitude;
       geolocation.lng = longitude;
-      location = address;
     }
-    // Store image in Firebase
-    const storeImage = async (image) => {
-      return new Promise((resolve, reject) => {
-        const storage = getStorage();
-        const filename = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
 
-        const storageRef = ref(storage, "images/" + filename);
-
-        const uploadTask = uploadBytesResumable(storageRef, image);
-
-           // Store image in firebase
+     // Store image in firebase
     const storeImage = async (image) => {
       return new Promise((resolve, reject) => {
         const storage = getStorage()
@@ -132,15 +122,9 @@ function CreateListing() {
 
         const uploadTask = uploadBytesResumable(storageRef, image)
 
-        // Register three observers:
-        // 1. 'state_changed' observer, called any time the state changes
-        // 2. Error observer, called on failure
-        // 3. Completion observer, called on successful completion
         uploadTask.on(
           'state_changed',
           (snapshot) => {
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             const progress =
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             console.log('Upload is ' + progress + '% done')
@@ -156,7 +140,6 @@ function CreateListing() {
             }
           },
           (error) => {
-            // Handle unsuccessful uploads
             reject(error)
           },
           () => {
@@ -169,17 +152,33 @@ function CreateListing() {
         )
       })
     }
-      })
-    }
     const imgUrls = await Promise.all(
-      [...images].map((image) => storeImage(image))
+      [...images].map(async (image) => {
+        const resizedImage = await resizeImage(image);
+        return storeImage(resizedImage);
+      })
     ).catch(() => {
       setLoading(false);
       toast.error("Unable to upload images, check file size");
       return;
     })
-    console.log(imgUrls)
+    const formDataCopy = {
+      ...formData,
+      imgUrls,
+      geolocation,
+      timestamp: serverTimestamp()
+    };
+
+    formDataCopy.location = address;
+    delete formDataCopy.images;
+    delete formDataCopy.address;
+    location && (formDataCopy.location = location);
+    !formDataCopy.offer && delete formDataCopy.discountedPrice;
+
+    const docRef = await addDoc(collection(db, "listings"), formDataCopy);
     setLoading(false);
+    toast.success("Listing added successfully!");
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`)
   }
 
   const onMutate = e => {
