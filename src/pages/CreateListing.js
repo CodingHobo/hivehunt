@@ -15,6 +15,7 @@ import Spinner from '../components/Spinner';
 import resizeImage from '../utils/resizeImage';
 
 function CreateListing() {
+  // eslint-disable-next-line
   const [ geolocationEnabled, setGeolocationEnabled ] = useState(true);
   const [loading, setLoading] = useState(false)
 
