@@ -12,12 +12,13 @@ body {
   background-color: #e5e6e5;
   margin: 0;
   box-sizing: border-box;
+  color: #474747;
 }
 
 a {
   text-decoration: none;
   display: block;
-  color: #000000;
+  color: #474747;
 }
 
 button {
@@ -59,7 +60,7 @@ button {
 
 .primaryButton {
   cursor: pointer;
-  background: #089eb5;
+  background: #58816f;
   border-radius: 1rem;
   padding: 0.85rem 2rem;
   color: #ffffff;
@@ -75,15 +76,16 @@ button {
 .removeIcon {
   cursor: pointer;
   position: absolute;
-  top: -3%;
-  right: -2%;
+  bottom: 5%;
+  right: 1%;
 }
 
 .editIcon {
   cursor: pointer;
   position: absolute;
-  top: -3.4%;
-  right: 20px;
+  top: 8%;
+  right: 1%;
+  color: #0a9eb5
 }
 
 .pageContainer,
@@ -126,7 +128,7 @@ button {
   width: 64px;
   height: 64px;
   border: 8px solid;
-  border-color: #089eb5 transparent #089eb5 transparent;
+  border-color: #58816f transparent #58816f transparent;
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
 }
@@ -218,7 +220,7 @@ button {
 
 .forgotPasswordLink {
   cursor: pointer;
-  color: #089eb5;
+  color: #58816f;
   font-weight: 600;
   text-align: right;
 }
@@ -258,7 +260,7 @@ button {
   align-items: center;
   width: 3rem;
   height: 3rem;
-  background-color: #089eb5;
+  background-color: #58816f;
   border-radius: 50%;
 }
 @media (min-width: 1024px) {
@@ -295,7 +297,7 @@ button {
 
 .registerLink {
   margin-top: 4rem;
-  color: #089eb5;
+  color: #58816f;
   font-weight: 600;
   text-align: center;
   margin-bottom: 3rem;
@@ -420,7 +422,7 @@ button {
 .categoryListingImg {
   width: 30%;
   height: 100px;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   object-fit: cover;
 }
 @media (min-width: 1024px) {
@@ -456,7 +458,7 @@ button {
   margin-top: 0.5rem;
   font-weight: 600;
   font-size: 1.1rem;
-  color: #089eb5;
+  color: #58816f;
   margin-bottom: 0;
   display: flex;
   align-items: center;
@@ -519,7 +521,7 @@ button {
 
 .discountPrice {
   padding: 0.25rem 0.5rem;
-  background-color: #000000;
+  background-color: #e1a80a;
   color: #ffffff;
   border-radius: 1rem;
   font-size: 0.8rem;
@@ -529,7 +531,7 @@ button {
 
 .listingType {
   padding: 0.25rem 0.5rem;
-  background-color: #089eb5;
+  background-color: #58816f;
   color: #ffffff;
   border-radius: 2rem;
   display: inline;
@@ -630,7 +632,7 @@ button {
   font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
-  background-color: #089eb5;
+  background-color: #58816f;
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
 }
@@ -638,7 +640,7 @@ button {
 .profileDetailsHeader {
   display: flex;
   justify-content: space-between;
-  max-width: 500px;
+  max-width: 520px;
 }
 
 .personalDetailsText {
@@ -648,7 +650,7 @@ button {
 .changePersonalDetails {
   cursor: pointer;
   font-weight: 600;
-  color: #089eb5;
+  color: #58816f;
 }
 
 .profileCard {
@@ -656,7 +658,7 @@ button {
   border-radius: 1rem;
   padding: 1rem;
   box-shadow: rgba(0, 0, 0, 0.2);
-  max-width: 500px;
+  max-width: 530px;
 }
 
 .profileDetails {
@@ -694,13 +696,13 @@ button {
 }
 
 .createListing {
-  background-color: #ffffff;
+  background-color: #e1a80a;
   border-radius: 1rem;
   padding: 0.25rem 1rem;
   box-shadow: rgba(0, 0, 0, 0.2);
   margin-top: 2rem;
   font-weight: 600;
-  max-width: 500px;
+  max-width: 530px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -711,8 +713,20 @@ button {
   font-weight: 600;
 }
 
-.lisitingsList {
+.listingsList {
   padding: 0;
+}
+
+.listingListItem {
+  position: relative;
+  list-style-type: none;
+}
+
+.listingListItemDiv {
+  background-color: rgba(0, 0, 0, 0.1); /* This is black with 50% opacity as an example */
+  border-radius: 1rem;
+  padding: 0.5rem 0.5rem 0.1rem 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .formLabel {
@@ -732,18 +746,18 @@ button {
 .formInputSmall,
 .formInputFile,
 .formButtonActive {
-  padding: 0.9rem 3rem;
+  padding: 0.5rem 2rem;
   background-color: #ffffff;
   font-weight: 600;
-  border-radius: 1rem;
+  border-radius: 0.4rem;
   font-size: 1rem;
-  margin: 0.5rem 0.5rem 0 0;
+  margin: 0.4rem 0.6rem 0 0;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .formButtonActive {
-  background-color: #089eb5;
+  background-color: #58816f;
   color: #ffffff;
 }
 
@@ -763,18 +777,18 @@ button {
 .formInputSmall,
 .formInputFile {
   margin-right: 3rem;
-  padding: 0.9rem 0.7rem;
+  padding: 0.4rem 0.7rem;
   text-align: center;
 }
 
 .formInputName {
-  padding: 0.9rem 1rem;
+  padding: 0.7rem 1rem;
   width: 90%;
   max-width: 326px;
 }
 
 .formInputAddress {
-  padding: 0.9rem 1rem;
+  padding: 0.7rem 1rem;
   width: 90%;
   max-width: 326px;
 }
@@ -798,7 +812,7 @@ button {
   width: 100%;
 }
 .formInputFile::-webkit-file-upload-button {
-  background-color: #089eb5;
+  background-color: #58816f;
   border: none;
   color: #ffffff;
   font-weight: 600;
@@ -808,7 +822,13 @@ button {
 }
 
 .createListingButton {
-  margin-top: 5rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  background-color:#e1a80a;
+}
+
+.cancelCreateListingButton {
+  background-color:#2c2c2c
 }
 
 .offers {
@@ -823,4 +843,38 @@ button {
   margin-left: 1rem;
   font-size: 0.8rem;
   opacity: 0.75;
+}
+
+.align-bottom {
+  vertical-align: bottom;
+}
+
+.hiveHuntHeader {
+    left: 0;
+    top: 0;
+    height: 5rem;
+    z-index: 1000;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 2vw;
+    margin-top: 4vh;
+}
+
+.logo {
+    margin-right: 1rem;
+    position: relative;
+    top: -0.4rem;
+}
+
+/* Media query for small screens */
+@media (max-width: 600px) {
+    .hiveHuntHeader {
+        margin-top: 6vh; /* Adjust as needed */
+        ;
+    }
+
+    .logo {
+        top: 10; /* Resetting the position might help in displaying the logo fully */
+    }
 }

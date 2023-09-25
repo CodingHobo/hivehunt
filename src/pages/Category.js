@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   collection,
   getDocs,
@@ -7,6 +7,7 @@ import {
   where,
   orderBy,
   limit,
+  startAfter,
 } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
@@ -16,6 +17,7 @@ import ListingItem from "../components/ListingItem";
 function Category() {
   const [ listings, setListings ] = useState(null);
   const [ loading, setLoading ] = useState(true);
+  const [ lastFetchedListing, setLastFetchedListing ] = useState(null);
 
   const params = useParams();
 
@@ -30,11 +32,14 @@ function Category() {
           listingsRef,
           where("type", "==", params.categoryName),
           orderBy("timestamp", "desc"),
-          limit(10)
+          limit(5)
         );
 
         // Execute query
         const querySnapshot = await getDocs(q);
+
+        const lastVisible = querySnapshot.docs[ querySnapshot.docs.length - 1 ];
+        setLastFetchedListing(lastVisible);
 
         const listings = [];
 
@@ -51,15 +56,56 @@ function Category() {
       }
     };
     fetchListings();
-  }, [params.categoryName]);
+  }, [ params.categoryName ]);
+
+  // Pagination =>> Load more
+  const onFetchMoreListings = async () => {
+    try {
+      // Get reference
+      const listingsRef = collection(db, "listings");
+
+      // Craeate query
+      const q = query(
+        listingsRef,
+        where("type", "==", params.categoryName),
+        orderBy("timestamp", "desc"),
+        startAfter(lastFetchedListing),
+        limit(5)
+      );
+
+      // Execute query
+      const querySnapshot = await getDocs(q);
+
+      const lastVisible = querySnapshot.docs[ querySnapshot.docs.length - 1 ];
+      setLastFetchedListing(lastVisible);
+
+      const listings = [];
+
+      querySnapshot.forEach((doc) => {
+        return listings.push({
+          id: doc.id,
+          data: doc.data()
+        });
+      });
+      setListings((preveState) => [...preveState, ...listings]);
+      setLoading(false);
+    } catch (error) {
+      toast.error("Could not fetch listings")
+    }
+  };
+
+  if (loading) {
+    return <Spinner />
+  }
+
 
   return (
     <div className="category">
       <header>
         <p className="pageHeader">
           {params.categoryName === "rent"
-            ? "Homes for Rent"
-            : "Homes for Sale"
+            ? "Hives for Rent"
+            : "Hives for Sale"
           }
         </p>
       </header>
@@ -79,9 +125,22 @@ function Category() {
                 ))}
               </ul>
             </main>
+            <br />
+            <br />
+            {lastFetchedListing && (
+              <p className="loadMore" onClick={onFetchMoreListings}>More listings</p>
+            )}
           </>
       ) : ( <p>No listings for {params.categoryName}</p>
       )}
+      {params.categoryName === "rent"
+        ? <Link to="/category/sale">
+        <p className="exploreCategoryName">Check out Hives for Sale</p>
+        </Link>
+        : <Link to="/category/rent">
+        <p className="exploreCategoryName">Check out Hives for Rent</p>
+        </Link>
+      }
 
     </div>
   )

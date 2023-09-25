@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { ReactComponent as OfferIcon } from '../assets/svg/localOfferIcon.svg'
 import { ReactComponent as ExploreIcon } from '../assets/svg/exploreIcon.svg'
 import { ReactComponent as PersonOutlineIcon } from '../assets/svg/personOutlineIcon.svg'
+import { ReactComponent as InfoIcon } from '../assets/svg/infoIcon.svg'
 
 
 function Navbar() {
@@ -14,8 +15,8 @@ function Navbar() {
               {({ isActive }) => (
                 <>
                   <ExploreIcon
-                    fill={isActive ? '#2c2c2c' : '#8f8f8f'}
-                    width='36px'
+                    fill={isActive ? '#58816f' : '#8f8f8f'}
+                    width='56px'
                     height='36px'
                   />
                   <p
@@ -36,8 +37,8 @@ function Navbar() {
               {({ isActive }) => (
                 <>
                   <OfferIcon
-                    fill={isActive ? '#2c2c2c' : '#8f8f8f'}
-                    width='36px'
+                    fill={isActive ? '#58816f' : '#8f8f8f'}
+                    width='45px'
                     height='36px'
                   />
                   <p
@@ -58,9 +59,9 @@ function Navbar() {
               {({ isActive }) => (
                 <>
                   <PersonOutlineIcon
-                    fill={isActive ? '#2c2c2c' : '#8f8f8f'}
-                    width='36px'
-                    height='36px'
+                    fill={isActive ? '#58816f' : '#8f8f8f'}
+                    width='48px'
+                    height='37px'
                   />
                   <p
                     className={
@@ -70,6 +71,28 @@ function Navbar() {
                     }
                   >
                     Profile
+                  </p>
+                </>
+              )}
+            </NavLink>
+          </li>
+          <li className='navbarListItem'>
+            <NavLink to='/about'>
+              {({ isActive }) => (
+                <>
+                  <InfoIcon
+                    fill={isActive ? '#58816f' : '#8f8f8f'}
+                    width='46px'
+                    height='35px'
+                  />
+                  <p
+                    className={
+                      isActive
+                        ? 'navbarListItemNameActive'
+                        : 'navbarListItemName'
+                    }
+                  >
+                    About
                   </p>
                 </>
               )}
