@@ -1,70 +1,75 @@
-# Getting Started with Create React App
+# HiveHunt 🐝🏡
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![HiveHunt Logo](src/assets/png/hiveHuntBanner.png)
 
-## Available Scripts
+HiveHunt is a mobile-first platform designed to help users explore housing for rent or for sale. With a modern tech stack and user-friendly interface, HiveHunt ensures that finding or listing your next home is a breeze.
 
-In the project directory, you can run:
+## Features
+- **User Authentication:** Sign up and log in using Google OAuth.
+- **Listing Management:** Create, edit, and delete housing listings.
+- **Contact Owners:** Reach out to listing owners via an integrated email feature.
+- **Special Deals:** Stay updated with the latest housing deals.
+- **Interactive Map:** Browse housing locations with an integrated Leaflet map.
 
-### `npm start`
+## Tech Stack
+- React
+- Firebase/Firestore
+- Google OAuth
+- Geocoding API
+- React Leaflet
+- Swiper
+- Pica
+- Figma
+- Netlify
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Setup and Build Process
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+To run HiveHunt locally:
 
-### `npm test`
+1. Clone the repository:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   ```
+   git clone https://github.com/CodingHobo/house-marketplace
+   ```
 
-### `npm run build`
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Set up your environment variables in a `.env` file in the root directory. Ensure that your Firebase configurations and other sensitive data are secured.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. Start the development server:
+   ```
+   npm start
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+To build for production:
+```
+npm run build
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Deployment
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+HiveHunt is proudly hosted on [Netlify](https://www.netlify.com/).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Version
+1.0.0
 
-## Learn More
+## Future Improvements
+- Add search capabilities based on region.
+- Implement in-app messaging.
+- Introduce a calendar to display booking availability.
+- Distinguish between housing types (e.g., condo, apartment, house).
+- List amenities for each property.
+- Showcase nearby attractions.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
+Designed with ❤️ by CodingHobo 🐶
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### License
+This project is licensed under the MIT License. See the LICENSE.md file for more details.

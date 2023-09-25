@@ -1,3 +1,5 @@
+import githubIcon from '../assets/svg/githubIcon.svg'
+
 function About() {
   return (
     <div className="explore">
@@ -5,7 +7,7 @@ function About() {
         <p className="pageHeader">Info</p>
         <h3>Tech Stack:</h3>
         <p>React | Firebase/Firestore | Google OAuth | Geocoding API</p>
-        <p>Leaflet | Swiper | Figma | Pica | Vercel</p>
+        <p>Leaflet | Swiper | Figma | Pica | Netlify</p>
         <h3>Version:</h3>
         <p>1.0.0</p>
         <h3>Future Improvements:</h3>
@@ -29,6 +31,9 @@ function About() {
             Add nearby attractions
           </li>
         </ul>
+        <>
+          <a href="https://github.com/CodingHobo/" target="_blank" rel="noreferrer"><img src={githubIcon} alt="github" width="30px" height="30px" className="alignBottom"/></a> CodingHobo
+        </>
       </header>
     </div>
   )
