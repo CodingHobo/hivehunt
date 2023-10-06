@@ -13,6 +13,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { v4 as uuidv4 } from 'uuid'
 import Spinner from '../components/Spinner'
+import resizeImage from '../utils/resizeImage';
 
 function EditListing() {
   // eslint-disable-next-line
@@ -188,12 +189,15 @@ function EditListing() {
     }
 
     const imgUrls = await Promise.all(
-      [...images].map((image) => storeImage(image))
+      [...images].map(async (image) => {
+        const resizedImage = await resizeImage(image);
+        return storeImage(resizedImage);
+      })
     ).catch(() => {
-      setLoading(false)
-      toast.error('Images not uploaded')
-      return
-    })
+      setLoading(false);
+      toast.error('Images not uploaded');
+      return;
+    });
 
     const formDataCopy = {
       ...formData,
@@ -473,7 +477,6 @@ function EditListing() {
             max='6'
             accept='.jpg,.png,.jpeg'
             multiple
-            required
           />
           <button type='submit' className='primaryButton createListingButton'>
             Edit Listing
