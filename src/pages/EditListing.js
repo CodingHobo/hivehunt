@@ -103,59 +103,51 @@ function EditListing() {
   }, [isMounted])
 
   const onSubmit = async (e) => {
-    e.preventDefault()
-
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
 
     if (discountedPrice >= regularPrice) {
-      setLoading(false)
-      toast.error('Discounted price needs to be less than regular price')
-      return
+      setLoading(false);
+      toast.error('Discounted price needs to be less than regular price');
+      return;
     }
 
     if (images.length > 6) {
-      setLoading(false)
-      toast.error('Max 6 images')
-      return
+      setLoading(false);
+      toast.error('Max 6 images');
+      return;
     }
 
-    let geolocation = {}
-    let location
+    let geolocation = {};
+    let location;
 
     if (geolocationEnabled) {
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`
-      )
+      );
 
-      const data = await response.json()
-
-      geolocation.lat = data.results[0]?.geometry.location.lat ?? 0
-      geolocation.lng = data.results[0]?.geometry.location.lng ?? 0
-
-      location =
-        data.status === 'ZERO_RESULTS'
-          ? undefined
-          : data.results[0]?.formatted_address
+      const data = await response.json();
+      geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
+      geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
+      location = data.status === 'ZERO_RESULTS' ? undefined : data.results[0]?.formatted_address;
 
       if (location === undefined || location.includes('undefined')) {
-        setLoading(false)
-        toast.error('Please enter a correct address')
-        return
+        setLoading(false);
+        toast.error('Please enter a correct address');
+        return;
       }
     } else {
-      geolocation.lat = latitude
-      geolocation.lng = longitude
+      geolocation.lat = latitude;
+      geolocation.lng = longitude;
     }
 
     // Store image in firebase
     const storeImage = async (image) => {
       return new Promise((resolve, reject) => {
-        const storage = getStorage()
-        const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`
-
-        const storageRef = ref(storage, 'images/' + fileName)
-
-        const uploadTask = uploadBytesResumable(storageRef, image)
+        const storage = getStorage();
+        const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+        const storageRef = ref(storage, 'images/' + fileName);
+        const uploadTask = uploadBytesResumable(storageRef, image);
 
         uploadTask.on(
           'state_changed',
@@ -175,49 +167,56 @@ function EditListing() {
             }
           },
           (error) => {
-            reject(error)
+            reject(error);
           },
           () => {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              resolve(downloadURL)
-            })
+              resolve(downloadURL);
+            });
           }
-        )
-      })
+        );
+      });
+    };
+
+    let imgUrls = [];
+    if (listing.imgUrls) {
+      imgUrls = [...listing.imgUrls];
     }
 
-    const imgUrls = await Promise.all(
-      [...images].map(async (image) => {
-        const resizedImage = await resizeImage(image);
-        return storeImage(resizedImage);
-      })
-    ).catch(() => {
-      setLoading(false);
-      toast.error('Images not uploaded');
-      return;
-    });
+    if (images && images.length > 0) {
+      const newImgUrls = await Promise.all(
+        [...images].map(async (image) => {
+          const resizedImage = await resizeImage(image);
+          return storeImage(resizedImage);
+        })
+      ).catch(() => {
+        setLoading(false);
+        toast.error('Images not uploaded');
+        return [];
+      });
+      imgUrls = [...imgUrls, ...newImgUrls];
+    }
 
     const formDataCopy = {
       ...formData,
       imgUrls,
       geolocation,
       timestamp: serverTimestamp(),
-    }
+    };
 
-    formDataCopy.location = address
-    delete formDataCopy.images
-    delete formDataCopy.address
-    !formDataCopy.offer && delete formDataCopy.discountedPrice
+    formDataCopy.location = address;
+    delete formDataCopy.images;
+    delete formDataCopy.address;
+    !formDataCopy.offer && delete formDataCopy.discountedPrice;
 
     // Update listing
-    const docRef = doc(db, 'listings', params.listingId)
-    await updateDoc(docRef, formDataCopy)
-    setLoading(false)
-    toast.success('Listing saved')
-    navigate(`/category/${formDataCopy.type}/${docRef.id}`)
-  }
+    const docRef = doc(db, 'listings', params.listingId);
+    await updateDoc(docRef, formDataCopy);
+    setLoading(false);
+    toast.success('Listing saved');
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
+  };
+
 
   const onMutate = (e) => {
     let boolean = null
@@ -469,6 +468,16 @@ function EditListing() {
           <p className='imagesInfo'>
             The first image will be the cover (max 6).
           </p>
+
+          {/* Display current images */}
+          {listing && listing.imgUrls && listing.imgUrls.length > 0 && (
+            <div className="currentImages">
+              {listing.imgUrls.map((url, index) => (
+                <img key={index} src={url} alt={`Image ${index + 1}`} />
+              ))}
+            </div>
+          )}
+
           <input
             className='formInputFile'
             type='file'
